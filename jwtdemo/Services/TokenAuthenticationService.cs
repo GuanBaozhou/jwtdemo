@@ -35,7 +35,7 @@ namespace jwtdemo.Services
 
             SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenManagement.Secret));
 
-            Microsoft.IdentityModel.Tokens.TokenValidationParameters parameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            TokenValidationParameters parameters = new TokenValidationParameters()
             {
                 // The signing key must match!
                 ValidateIssuerSigningKey = true,
