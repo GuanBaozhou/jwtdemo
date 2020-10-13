@@ -63,10 +63,12 @@ namespace jwtdemo.Controllers
         {
             var user = HttpContext.User;
             var headers = _httpContextAccessor.HttpContext.Request.Headers;
-            var tokenStr = headers["Authorization"];
-
-            var token = _authService.DecodeToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA5LzA5L2lkZW50aXR5L2NsYWltcy9hY3RvciI6WyLnrqHkv53mtLIiLCLnrqHkv53mtLIiXSwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2dyb3Vwc2lkIjoiMzEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoidmVsZW5vb28iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InYxODUwMjE1MDQwMiIsImV4cCI6MTYwMjU3NjE0MCwiaXNzIjoid2ViYXBpLmNuIiwiYXVkIjoiV2ViQXBpIn0.Pm7AOUEcypqqSSnG34QnxbnFrbd_DHejTgKAf8xr-X8");
-
+            var tokenStr = headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(tokenStr) && tokenStr.StartsWith("Bearer"))
+            {
+                string token = tokenStr.Substring("Bearer ".Length).Trim();
+                var auth = _authService.DecodeToken(token);
+            }
 
             return "value";
         }
